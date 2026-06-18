@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Add Course - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-book-plus"></i> Add New Course</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Course Registration Form</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/course/add">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="dept_id" class="form-label">Department <span class="text-danger">*</span></label>
+                            <select class="form-select" id="dept_id" name="dept_id" required>
+                                <option value="">Select Department</option>
+                                {% for dept in departments %}
+                                <option value="{{ dept.dept_id }}">{{ dept.dept_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="course_code" class="form-label">Course Code <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="course_code" name="course_code" 
+                                   placeholder="e.g., CS101" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="course_name" class="form-label">Course Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="course_name" name="course_name" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="credits" class="form-label">Credits <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="credits" name="credits" value="3" min="1" max="6" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="teacher_id" class="form-label">Instructor (Optional)</label>
+                            <select class="form-select" id="teacher_id" name="teacher_id">
+                                <option value="">-- No Instructor --</option>
+                                {% for teacher in teachers %}
+                                <option value="{{ teacher.teacher_id }}">
+                                    {{ teacher.first_name }} {{ teacher.last_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/courses" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Add Course
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Required Fields:</strong></p>
+                <ul class="small">
+                    <li>Department</li>
+                    <li>Course Code (unique)</li>
+                    <li>Course Name</li>
+                    <li>Credits</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

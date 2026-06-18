@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Enrollments - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-file-text"></i> Enrollments</h1>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="/enrollment/add" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle"></i> Enroll Student
+        </a>
+    </div>
+</div>
+
+<!-- Enrollments Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Total Enrollments: {{ total }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Course</th>
+                        <th>Enrollment Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enrollment in enrollments %}
+                    <tr>
+                        <td><strong>{{ enrollment.student_name }}</strong></td>
+                        <td>{{ enrollment.student_id }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ enrollment.course_code }}</span>
+                            {{ enrollment.course_name }}
+                        </td>
+                        <td>{{ enrollment.enrollment_date }}</td>
+                        <td>
+                            <a href="/student/{{ enrollment.student_id }}" class="btn btn-sm btn-info btn-action">
+                                <i class="bi bi-eye"></i> View Student
+                            </a>
+                            <form method="POST" action="/enrollment/{{ enrollment.enrollment_id }}/drop" style="display: inline;">
+                                <button type="submit" class="btn btn-sm btn-danger btn-action" onclick="return confirm('Drop this enrollment?')">
+                                    <i class="bi bi-trash"></i> Drop
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No enrollments found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page > 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page - 1 }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for p in range(max(1, page - 2), min(total_pages + 1, page + 3)) %}
+                    {% if p == page %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ p }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page < total_pages %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page + 1 }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ total_pages }}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ teacher.first_name }} {{ teacher.last_name }} - University Management System{% endblock %}
+
+{% block content %}
+<!-- Profile Header -->
+<div class="profile-header mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="mb-2">
+                <i class="bi bi-person-badge"></i> {{ teacher.first_name }} {{ teacher.last_name }}
+            </h1>
+            <p class="mb-0">ID: <strong>{{ teacher.teacher_id }}</strong></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/teachers" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Information -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Email</div>
+            <div class="info-value">{{ teacher.email }}</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Department</div>
+            <div class="info-value">{{ teacher.dept_name }} ({{ teacher.dept_code }})</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Designation</div>
+            <div class="info-value">{{ teacher.designation }}</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Hire Date</div>
+            <div class="info-value">{{ teacher.hire_date }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Assigned Courses -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-book"></i> Assigned Courses ({{ courses|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if courses %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Credits</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                            <tr>
+                                <td><strong>{{ course.course_code }}</strong></td>
+                                <td>{{ course.course_name }}</td>
+                                <td><span class="badge bg-info">{{ course.credits }}</span></td>
+                                <td>
+                                    <a href="/course/{{ course.course_id }}" class="btn btn-sm btn-info btn-action">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No courses assigned yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

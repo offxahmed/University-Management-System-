@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-pencil"></i> Edit Student</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Update Student Information</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/student/{{ student.student_id }}/edit">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="dept_id" class="form-label">Department <span class="text-danger">*</span></label>
+                            <select class="form-select" id="dept_id" name="dept_id" required>
+                                {% for dept in departments %}
+                                <option value="{{ dept.dept_id }}" {% if dept.dept_id == student.dept_id %}selected{% endif %}>
+                                    {{ dept.dept_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="roll_number" class="form-label">Roll Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="roll_number" name="roll_number" 
+                                   value="{{ student.roll_number }}" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" 
+                                   value="{{ student.first_name }}" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" 
+                                   value="{{ student.last_name }}" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ student.email }}" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/student/{{ student.student_id }}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Editable Fields:</strong></p>
+                <ul class="small">
+                    <li>Department</li>
+                    <li>Roll Number</li>
+                    <li>First & Last Name</li>
+                    <li>Email</li>
+                </ul>
+                <hr>
+                <p class="small text-muted">
+                    <i class="bi bi-shield-check"></i> 
+                    Non-editable fields like admission date and date of birth are preserved to maintain academic history.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.course_name }} - University Management System{% endblock %}
+
+{% block content %}
+<!-- Profile Header -->
+<div class="profile-header mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="mb-2">
+                <i class="bi bi-book"></i> {{ course.course_name }}
+            </h1>
+            <p class="mb-0">Course Code: <strong>{{ course.course_code }}</strong></p>
+            <p class="mb-0">ID: <strong>{{ course.course_id }}</strong></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/courses" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Course Information -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="info-card">
+            <div class="info-label">Department</div>
+            <div class="info-value">{{ course.dept_name }}</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="info-card">
+            <div class="info-label">Credits</div>
+            <div class="info-value"><span class="badge bg-info">{{ course.credits }}</span></div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="info-card">
+            <div class="info-label">Enrolled Students</div>
+            <div class="info-value">{{ students|length }}</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="info-card">
+            <div class="info-label">Instructor</div>
+            <div class="info-value">{{ course.teacher_name or 'Unassigned' }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Enrolled Students -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-people"></i> Enrolled Students ({{ students|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if students %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Roll Number</th>
+                                <th>Student Name</th>
+                                <th>Enrollment Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td><strong>{{ student.roll_number }}</strong></td>
+                                <td>{{ student.first_name }} {{ student.last_name }}</td>
+                                <td>{{ student.enrollment_date }}</td>
+                                <td>
+                                    <a href="/student/{{ student.student_id }}" class="btn btn-sm btn-info btn-action">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No students enrolled yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

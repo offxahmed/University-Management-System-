@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Enroll Student - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-plus-circle"></i> Enroll Student in Course</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Enrollment Form</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/enrollment/add">
+                    <div class="mb-3">
+                        <label for="student_id" class="form-label">Student <span class="text-danger">*</span></label>
+                        <select class="form-select" id="student_id" name="student_id" required>
+                            <option value="">Select Student</option>
+                            {% for student in students %}
+                            <option value="{{ student.student_id }}">
+                                {{ student.student_name }} ({{ student.roll_number }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course_id" class="form-label">Course <span class="text-danger">*</span></label>
+                        <select class="form-select" id="course_id" name="course_id" required>
+                            <option value="">Select Course</option>
+                            {% for course in courses %}
+                            <option value="{{ course.course_id }}">
+                                {{ course.course_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="enrollment_date" class="form-label">Enrollment Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="enrollment_date" name="enrollment_date" required>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/enrollments" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Enroll Student
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Required Fields:</strong></p>
+                <ul class="small">
+                    <li>Student</li>
+                    <li>Course</li>
+                    <li>Enrollment Date</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

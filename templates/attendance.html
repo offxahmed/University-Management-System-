@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Mark Attendance - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-calendar-check"></i> Mark Attendance</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Attendance Form</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/attendance/mark">
+                    <div class="mb-3">
+                        <label for="roll_number" class="form-label">Roll Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="roll_number" name="roll_number" placeholder="Enter student roll number" required oninput="loadStudentCourses()">
+                        <div class="form-text">Type the roll number to load the enrolled courses for that student.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course_id" class="form-label">Course <span class="text-danger">*</span></label>
+                        <select class="form-select" id="course_id" name="course_id" required disabled>
+                            <option value="">Select Course</option>
+                        </select>
+                        <div class="form-text">The course list is populated from the selected student’s enrollments.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="attendance_date" class="form-label">Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="attendance_date" name="attendance_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/attendance" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Mark Attendance
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function loadStudentCourses() {
+    const rollNumber = document.getElementById('roll_number').value.trim();
+    const courseSelect = document.getElementById('course_id');
+
+    if (!rollNumber) {
+        courseSelect.disabled = true;
+        courseSelect.innerHTML = '<option value="">Select Course</option>';
+        return;
+    }
+
+    courseSelect.disabled = true;
+    courseSelect.innerHTML = '<option value="">Loading courses...</option>';
+    
+    fetch(`/api/student-courses?roll_number=${encodeURIComponent(rollNumber)}`)
+        .then(response => response.json())
+        .then(courses => {
+            courseSelect.innerHTML = '<option value="">Select Course</option>';
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.course_id;
+                option.textContent = `#${course.course_id} - ${course.course_code} - ${course.course_name}`;
+                courseSelect.appendChild(option);
+            });
+            courseSelect.disabled = courses.length === 0;
+            if (courses.length === 0) {
+                courseSelect.innerHTML = '<option value="">No enrolled courses found</option>';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+{% endblock %}

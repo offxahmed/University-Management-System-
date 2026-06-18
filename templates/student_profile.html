@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.first_name }} {{ student.last_name }} - University Management System{% endblock %}
+
+{% block content %}
+<!-- Profile Header -->
+<div class="profile-header mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="mb-2">
+                <i class="bi bi-person-circle"></i> {{ student.first_name }} {{ student.last_name }}
+            </h1>
+            <p class="mb-0">Roll Number: <strong>{{ student.roll_number }}</strong></p>
+            <p class="mb-0">ID: <strong>{{ student.student_id }}</strong></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/student/{{ student.student_id }}/edit" class="btn btn-light btn-lg me-2">
+                <i class="bi bi-pencil"></i> Edit
+            </a>
+            <a href="/students" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Information -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Email</div>
+            <div class="info-value">{{ student.email }}</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Department</div>
+            <div class="info-value">{{ student.dept_name }} ({{ student.dept_code }})</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Admission Date</div>
+            <div class="info-value">{{ student.admission_date }}</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="info-card">
+            <div class="info-label">Date of Birth</div>
+            <div class="info-value">{{ student.date_of_birth }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Academic Metrics -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">GPA</h6>
+                <h2 class="text-primary">{{ "%.2f"|format(student.gpa or 0) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">CGPA</h6>
+                <h2 class="text-success">{{ "%.2f"|format(student.cgpa or 0) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Academic Standing</h6>
+                <h5>
+                    {% if student.academic_standing == 'Excellent' %}
+                        <span class="badge bg-success">{{ student.academic_standing }}</span>
+                    {% elif student.academic_standing == 'Good' %}
+                        <span class="badge bg-info">{{ student.academic_standing }}</span>
+                    {% elif student.academic_standing == 'Satisfactory' %}
+                        <span class="badge bg-warning">{{ student.academic_standing }}</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ student.academic_standing }}</span>
+                    {% endif %}
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Enrolled Courses</h6>
+                <h2 class="text-info">{{ enrollments|length }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enrollments -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> Course Enrollments ({{ enrollments|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if enrollments %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Credits</th>
+                                <th>Enrollment Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in enrollments %}
+                            <tr>
+                                <td><strong>{{ enrollment.course_code }}</strong></td>
+                                <td>{{ enrollment.course_name }}</td>
+                                <td><span class="badge bg-info">{{ enrollment.credits }}</span></td>
+                                <td>{{ enrollment.enrollment_date }}</td>
+                                <td>
+                                    <a href="/course/{{ enrollment.course_id }}" class="btn btn-sm btn-info btn-action">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No enrollments yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clipboard-data"></i> Results ({{ results|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if results %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Marks</th>
+                                <th>Grade</th>
+                                <th>GPA Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+                                <td><strong>{{ result.course_code }}</strong></td>
+                                <td>{{ result.course_name }}</td>
+                                <td>{{ result.marks }}/100</td>
+                                <td><span class="badge bg-primary">{{ result.grade }}</span></td>
+                                <td>{{ "%.2f"|format(result.gpa_points or 0) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No results yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Attendance Summary -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-calendar-check"></i> Attendance Summary</h5>
+            </div>
+            <div class="card-body">
+                {% if attendance_summary %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Present</th>
+                                <th>Total</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for att in attendance_summary %}
+                            <tr>
+                                <td><strong>{{ att.course_code }}</strong></td>
+                                <td>{{ att.course_name }}</td>
+                                <td>{{ att.present }}</td>
+                                <td>{{ att.total }}</td>
+                                <td>
+                                    {% set percentage = (att.present / att.total * 100) if att.total > 0 else 0 %}
+                                    {{ "%.1f"|format(percentage) }}%
+                                    {% if percentage >= 80 %}
+                                    <span class="badge bg-success">Good</span>
+                                    {% elif percentage >= 70 %}
+                                    <span class="badge bg-warning">Fair</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Poor</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No attendance records yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

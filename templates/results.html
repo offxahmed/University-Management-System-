@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Results - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-clipboard-data"></i> Results Management</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Submit Grade</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/result/submit">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="student_id" class="form-label">Student <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="student_id" name="student_id" placeholder="Student ID" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="course_id" class="form-label">Course <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="course_id" name="course_id" placeholder="Course ID" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="marks" class="form-label">Marks (0-100) <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="marks" name="marks" min="0" max="100" step="0.01" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="grade" class="form-label">Grade <span class="text-danger">*</span></label>
+                            <select class="form-select" id="grade" name="grade" required>
+                                <option value="">Select Grade</option>
+                                <option value="A">A (Excellent)</option>
+                                <option value="B">B (Good)</option>
+                                <option value="C">C (Satisfactory)</option>
+                                <option value="D">D (Poor)</option>
+                                <option value="F">F (Fail)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-clockwise"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Submit Grade
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Grade Scale:</strong></p>
+                <ul>
+                    <li><strong>A:</strong> 90-100 (Excellent)</li>
+                    <li><strong>B:</strong> 80-89 (Good)</li>
+                    <li><strong>C:</strong> 70-79 (Satisfactory)</li>
+                    <li><strong>D:</strong> 60-69 (Poor)</li>
+                    <li><strong>F:</strong> Below 60 (Fail)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

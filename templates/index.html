@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="profile-header">
+            <h1 class="mb-2"><i class="bi bi-speedometer2"></i> Dashboard</h1>
+            <p class="mb-0">A modern 3D management workspace for students, teachers, courses, and results.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <i class="bi bi-people" style="font-size: 2rem; color: #3b82f6;"></i>
+            <div class="stat-number">{{ stats.students }}</div>
+            <div class="stat-label">Total Students</div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <i class="bi bi-person-badge" style="font-size: 2rem; color: #10b981;"></i>
+            <div class="stat-number">{{ stats.teachers }}</div>
+            <div class="stat-label">Total Teachers</div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <i class="bi bi-book" style="font-size: 2rem; color: #f59e0b;"></i>
+            <div class="stat-number">{{ stats.courses }}</div>
+            <div class="stat-label">Total Courses</div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <i class="bi bi-file-text" style="font-size: 2rem; color: #ef4444;"></i>
+            <div class="stat-number">{{ stats.enrollments }}</div>
+            <div class="stat-label">Enrollments</div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="/student/add" class="btn btn-primary btn-lg me-2 mb-2">
+                    <i class="bi bi-plus-circle"></i> Add Student
+                </a>
+                <a href="/teacher/add" class="btn btn-success btn-lg me-2 mb-2">
+                    <i class="bi bi-plus-circle"></i> Add Teacher
+                </a>
+                <a href="/course/add" class="btn btn-warning btn-lg me-2 mb-2">
+                    <i class="bi bi-plus-circle"></i> Add Course
+                </a>
+                <a href="/enrollment/add" class="btn btn-info btn-lg me-2 mb-2">
+                    <i class="bi bi-plus-circle"></i> Enroll Student
+                </a>
+                <a href="/attendance" class="btn btn-secondary btn-lg me-2 mb-2">
+                    <i class="bi bi-calendar-check"></i> Mark Attendance
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Management Links -->
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-people"></i> Students</h5>
+            </div>
+            <div class="card-body">
+                <p>Manage student records, profiles, and academic information.</p>
+                <a href="/students" class="btn btn-primary">View All Students</a>
+                <a href="/student/add" class="btn btn-outline-primary">Add New Student</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-person-badge"></i> Teachers</h5>
+            </div>
+            <div class="card-body">
+                <p>Manage teacher profiles and course assignments.</p>
+                <a href="/teachers" class="btn btn-primary">View All Teachers</a>
+                <a href="/teacher/add" class="btn btn-outline-primary">Add New Teacher</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-book"></i> Courses</h5>
+            </div>
+            <div class="card-body">
+                <p>Manage courses, credits, and course assignments.</p>
+                <a href="/courses" class="btn btn-primary">View All Courses</a>
+                <a href="/course/add" class="btn btn-outline-primary">Add New Course</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> Enrollments</h5>
+            </div>
+            <div class="card-body">
+                <p>Manage student course enrollments and registrations.</p>
+                <a href="/enrollments" class="btn btn-primary">View All Enrollments</a>
+                <a href="/enrollment/add" class="btn btn-outline-primary">Enroll Student</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-calendar-check"></i> Attendance</h5>
+            </div>
+            <div class="card-body">
+                <p>Track and manage student attendance records.</p>
+                <a href="/attendance" class="btn btn-primary">Mark Attendance</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clipboard-data"></i> Results</h5>
+            </div>
+            <div class="card-body">
+                <p>Submit and manage student grades and results.</p>
+                <a href="/results" class="btn btn-primary">Submit Results</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

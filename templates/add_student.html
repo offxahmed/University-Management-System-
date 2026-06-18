@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Add Student - University Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1><i class="bi bi-person-plus"></i> Add New Student</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Student Registration Form</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/student/add">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="dept_id" class="form-label">Department <span class="text-danger">*</span></label>
+                            <select class="form-select" id="dept_id" name="dept_id" required>
+                                <option value="">Select Department</option>
+                                {% for dept in departments %}
+                                <option value="{{ dept.dept_id }}">{{ dept.dept_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="roll_number" class="form-label">Roll Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="roll_number" name="roll_number" placeholder="e.g., SP23-001" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="admission_date" class="form-label">Admission Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="admission_date" name="admission_date" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/students" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Add Student
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Required Fields:</strong></p>
+                <ul class="small">
+                    <li>Department</li>
+                    <li>Roll Number (unique)</li>
+                    <li>First & Last Name</li>
+                    <li>Email (unique)</li>
+                    <li>Date of Birth</li>
+                    <li>Admission Date</li>
+                </ul>
+                <hr>
+                <p class="small text-muted">
+                    <i class="bi bi-lightbulb"></i> 
+                    The system will automatically calculate GPA and academic standing based on enrolled courses and grades.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
