@@ -1,7 +1,8 @@
 [project]
 name = "university-management-system"
 version = "0.1.0"
-description = "A university management system web app"
+description = "University Management System Flask App"
+readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "Flask>=3.0.0",
